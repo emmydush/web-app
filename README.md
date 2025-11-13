@@ -51,9 +51,36 @@ A simple web application built with Flask that includes user authentication and 
 
 1. Clone the repository or extract the files
 
-2. Install Python dependencies:
+2. Create a virtual environment (optional but recommended):
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate  # On Windows
+   ```
+
+3. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
+   ```
+
+4. Set up PostgreSQL:
+   - Install PostgreSQL if you haven't already
+   - Create a new database (e.g., `web_app_db`)
+   - Note your PostgreSQL credentials
+
+5. Configure environment variables:
+   - Copy `.env.example` to `.env`
+   - Update the `.env` file with your PostgreSQL credentials:
+     ```
+     DB_USER=postgres
+     DB_PASSWORD=your_password
+     DB_HOST=localhost
+     DB_PORT=5432
+     DB_NAME=web_app_db
+     ```
+
+6. Initialize the database:
+   ```bash
+   python init_db.py
    ```
 
 ## Running the Application
@@ -92,15 +119,32 @@ A simple web application built with Flask that includes user authentication and 
 
 ## Database
 
-The application uses SQLite for data storage. The database file (`app.db`) is automatically created in the `instance/` folder when you first run the application.
+The application now uses PostgreSQL for data storage. The database configuration is managed through environment variables in the `.env` file.
+
+**Default PostgreSQL Connection Details:**
+- **Host:** localhost
+- **Port:** 5432
+- **User:** postgres
+- **Database:** web_app_db
+
+You can change these by updating the `.env` file.
+
+### Using pgAdmin
+
+To manage your PostgreSQL database with pgAdmin:
+1. Open pgAdmin (usually at `http://localhost:5050`)
+2. Add a new server connection with your PostgreSQL details
+3. Create a new database named `web_app_db`
+4. Run `python init_db.py` to initialize tables
 
 ## Technologies Used
 
 - **Flask**: Python web framework
 - **Flask-SQLAlchemy**: ORM for database operations
 - **Flask-Login**: Session management and authentication
+- **PostgreSQL**: Relational database
+- **psycopg2**: PostgreSQL adapter for Python
 - **Bootstrap 5**: CSS framework for responsive design
-- **SQLite**: Lightweight database
 
 ## Future Enhancements
 
