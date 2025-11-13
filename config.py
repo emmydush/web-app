@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 
+# Load environment variables from .env file if it exists
+# In production/container environments, env vars are typically set directly
 load_dotenv()
 
 class Config:
@@ -26,7 +28,9 @@ class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # In production, DATABASE_URL is provided by Render
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        f"postgresql://{os.environ.get('DB_USER', 'postgres')}:{os.environ.get('DB_PASSWORD', 'password')}@{os.environ.get('DB_HOST', 'localhost')}:{os.environ.get('DB_PORT', '5432')}/{os.environ.get('DB_NAME', 'web_app_db')}"
 
 class TestingConfig(Config):
     """Testing configuration"""
